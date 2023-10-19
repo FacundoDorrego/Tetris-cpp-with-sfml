@@ -8,7 +8,7 @@ int main()
     Tablero tablero;
     RenderWindow window(VideoMode(400, 400), "Tetris");
     window.setFramerateLimit(60);
-    int derecha=0, izquierda = 0;
+    int derecha=0, izquierda = 0,arriba=0;
     tablero.colocarPieza();
     while (window.isOpen()) {
         Event event;
@@ -32,7 +32,7 @@ int main()
         }
         else if (Keyboard::isKeyPressed(Keyboard::Right) && derecha) {
             derecha++;
-            if (derecha == 7) {
+            if (derecha == 6) {
                 derecha = 0;
             }
         }
@@ -45,10 +45,19 @@ int main()
         }
         else if (Keyboard::isKeyPressed(Keyboard::Left) && izquierda) {
             izquierda++;
-            if (izquierda == 7) {
+            if (izquierda == 6) {
                 izquierda = 0;
             }
         }
+        if (Keyboard::isKeyPressed(Keyboard::Up) && !arriba) {
+            tablero.rotacion();
+            arriba = 1;
+        }
+        else if (!Keyboard::isKeyPressed(Keyboard::Up)) {
+            arriba = 0;
+        }
+        
+
         if (tablero.actualizarTablero()) {
             if (!tablero.colocarPieza()) {
                 cout << "Perdiste" << endl;

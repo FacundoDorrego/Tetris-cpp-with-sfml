@@ -210,6 +210,37 @@ void Tablero::derecha() {
     }
 }
 
+void Tablero::rotacion(){
+    piezas.rotarPieza(indNuevaPieza);
+    vector<vector<bool>> pieza = piezas.ConsultPieza(indNuevaPieza);
+    int sz = (int)pieza.size();
+    for(int i=0;i<sz;i++){
+        for(int j=0;j<sz;j++){
+            if (pieza[i][j]) {
+                if (indY+i<0||indY+i>=20||indX+j>=10||tablero[indY+i][indX+j] > 0) {
+                    piezas.desRotarPieza(indNuevaPieza);
+                    return;
+                }
+            }
+        }
+    }
+    for(int i=0;i<20;i++){
+        for(int j=0;j<10;j++){
+            if (tablero[i][j] == -1) {
+                tablero[i][j] = 0;
+            }
+        }
+    }
+
+    for(int i=0;i<sz;i++){
+        for(int j=0;j<sz;j++){
+            if (pieza[i][j]) {
+                tablero[indY+i][indX+j] = -1;
+            }
+        }
+    }
+}
+
 void Tablero::draw(RenderTarget&rt, RenderStates rs) const{
 	for (int i = 0; i < 20; i++) {
 		for (int j = 0; j < 10; j++) {

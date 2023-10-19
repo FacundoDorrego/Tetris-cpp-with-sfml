@@ -32,5 +32,6 @@ public:
 	//movimientos
 	void izquierda();
 	void derecha();
+	void rotacion();
 	virtual void draw(RenderTarget&, RenderStates) const;
 };
