@@ -7,7 +7,7 @@ int main()
 {
     Tablero tablero;
     RenderWindow window(VideoMode(400, 400), "Tetris");
-    window.setFramerateLimit(5);
+    window.setFramerateLimit(60);
     tablero.colocarPieza();
     while (window.isOpen()) {
         Event event;
@@ -16,11 +16,12 @@ int main()
                 window.close();
             }
         }
+       
         if (Keyboard::isKeyPressed(Keyboard::Down)) {
-            tablero.actualizarLimiteTemp(18);
+            tablero.actualizarIntervalo(0.1f);
         }
         else {
-            tablero.actualizarLimiteTemp(60);
+            tablero.actualizarIntervalo(0.5f);
         }
         if (tablero.actualizarTablero()) {
             if (!tablero.colocarPieza()) {
@@ -33,7 +34,6 @@ int main()
         window.clear(Color(30, 30, 30));
         window.draw(tablero);
         window.display();
-      
     }
 
     return 0;

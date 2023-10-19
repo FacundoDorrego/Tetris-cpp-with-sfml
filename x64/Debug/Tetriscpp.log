@@ -1,7 +1,2 @@
 ﻿  main.cpp
-  tablero.cpp
-C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\tablero.cpp(8,46): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\tablero.cpp(8,38): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\tablero.cpp(18,15): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
-  Generando código...
-  Tetriscpp.vcxproj -> C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\x64\Debug\Tetriscpp.exe
+  Tetriscpp.vcxproj -> C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\Tetris-cpp-with-sfml\x64\Debug\Tetriscpp.exe

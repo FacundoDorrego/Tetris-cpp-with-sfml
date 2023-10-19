@@ -1,6 +1,7 @@
 #include "Tablero.hpp"
 #include "Piezas.hpp"
-Tablero::Tablero() {
+Tablero::Tablero():segundosTranscurridos(0.0f) {
+	reloj.restart();
 	memset(tablero, 0, sizeof(tablero));
 	for (int i = 0; i < 20; i++) {
 		for (int j = 0; j < 10; j++) {
@@ -64,58 +65,58 @@ bool Tablero::colocarPieza() {
 }
 
 bool Tablero::actualizarTablero() {
-	bool limite = false;
-	int aux;
-	if (temporizador <= limiteTemporizador) {
-		aux = 0;
-		for (int i = 18; i >= 0; i--) {
-			for (int j = 0; j < 10; j++) {
-				if (tablero[i][j] == -1) {
-					if (tablero[i + 1][j] <= 0) {
-						aux++;
-					}
-				}
-			}
-		}
-		if (aux == 4) {
-			for (int i = 18; i >= 0; i--) {
-				for (int j = 0; j < 10; j++) {
-					if (tablero[i][j] == -1) {
-						tablero[i][j] = 0;
-						tablero[i + 1][j] = -1;
-					}
-				}
-			}
-				
-			}
-			else {
-			aux = 0;
-			for (int i = 18; i >= 0; i--) {
-				for (int j = 0; j < 10; j++) {
-					if (tablero[i][j] == -1) {
-						if (tablero[i + 1][j] <= 0) {
-							aux++;
-						}
-					}
-				}
-			}
-			if (aux != 4) {
-				for (int i = 19; i >= 0; i--) {
-					for (int j = 0; j < 10; j++) {
-						if (tablero[i][j] == -1) {
-							tablero[i][j] = indColorNuevaPieza;
-						}
-					}
-				}
-				
-				limite = true;
-			}
-			temporizador = 0;
-		}
-		temporizador++;
-	}
-	return limite;
+    bool limite = false;
+    int aux;
+    
+    segundosTranscurridos += reloj.restart().asSeconds();
+    if (segundosTranscurridos >= intervaloActualizacion) {
+        aux = 0;
+        for (int i = 18; i >= 0; i--) {
+            for (int j = 0; j < 10; j++) {
+                if (tablero[i][j] == -1) {
+                    if (tablero[i + 1][j] <= 0) {
+                        aux++;
+                    }
+                }
+            }
+        }
+        if (aux == 4) {
+            for (int i = 18; i >= 0; i--) {
+                for (int j = 0; j < 10; j++) {
+                    if (tablero[i][j] == -1) {
+                        tablero[i][j] = 0;
+                        tablero[i + 1][j] = -1;
+                    }
+                }
+            }
+        } else {
+            aux = 0;
+            for (int i = 18; i >= 0; i--) {
+                for (int j = 0; j < 10; j++) {
+                    if (tablero[i][j] == -1) {
+                        if (tablero[i + 1][j] <= 0) {
+                            aux++;
+                        }
+                    }
+                }
+            }
+            if (aux != 4) {
+                for (int i = 19; i >= 0; i--) {
+                    for (int j = 0; j < 10; j++) {
+                        if (tablero[i][j] == -1) {
+                            tablero[i][j] = indColorNuevaPieza;
+                        }
+                    }
+                }
+                limite = true;
+            }
+        }
+        segundosTranscurridos = 0.0f;
+    }
+
+    return limite;
 }
+
 
 
 void Tablero::actualizarTableroColor(){
@@ -157,10 +158,11 @@ void Tablero::actualizarTableroColor(){
 	}
 }
 
-void Tablero::actualizarLimiteTemp(int l){
-	limiteTemporizador = l;
-}
 
+
+void Tablero::actualizarIntervalo(float i) {
+    intervaloActualizacion = i;
+}
 void Tablero::draw(RenderTarget&rt, RenderStates rs) const{
 	for (int i = 0; i < 20; i++) {
 		for (int j = 0; j < 10; j++) {

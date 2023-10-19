@@ -1,5 +1,6 @@
 
 #include <SFML/Graphics.hpp>
+#include <SFML/System/Clock.hpp>
 #include <iostream>
 #include <cstring>
 #include "Piezas.hpp"
@@ -12,10 +13,11 @@ private:
 	int indNuevaPieza, indColorNuevaPieza;
 	Color nuevaPiezaColor;
 	int indX, indY;
-	int temporizador = 0;
-	int limiteTemporizador = 40;
 	int tablero[20][10];
 	RectangleShape tableroShapes[20][10];
+	sf::Clock reloj;
+	float segundosTranscurridos;
+	float intervaloActualizacion = 0.5f;
 public:
 	//Constructor
 	Tablero();
@@ -26,5 +28,6 @@ public:
 	bool colocarPieza();
 	//Renderizado
 	void actualizarLimiteTemp(int l);
+	void actualizarIntervalo(float i);
 	virtual void draw(RenderTarget&, RenderStates) const;
 };
