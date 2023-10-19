@@ -29,5 +29,8 @@ public:
 	//Renderizado
 	void actualizarLimiteTemp(int l);
 	void actualizarIntervalo(float i);
+	//movimientos
+	void izquierda();
+	void derecha();
 	virtual void draw(RenderTarget&, RenderStates) const;
 };

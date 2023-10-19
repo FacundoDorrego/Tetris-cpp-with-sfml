@@ -158,11 +158,58 @@ void Tablero::actualizarTableroColor(){
 	}
 }
 
-
-
 void Tablero::actualizarIntervalo(float i) {
     intervaloActualizacion = i;
 }
+
+void Tablero::izquierda() {
+    int aux = 0;
+    for (int i = 0; i < 20; i++) {
+        for (int j = 1; j < 10; j++) {
+            if (tablero[i][j] == -1) {
+                if (tablero[i][j - 1] <= 0) {
+                    aux++;
+                }
+            }
+        }
+    }
+    if (aux == 4) {
+        indX++;
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (tablero[i][j] == -1) {
+                    tablero[i][j] = 0;
+                    tablero[i][j - 1] = -1;
+                }
+            }
+        }
+    }
+}
+
+void Tablero::derecha() {
+    int aux = 0;
+    for (int i = 0; i < 20; i++) {
+        for (int j = 0; j < 9; j++) {
+            if (tablero[i][j] == -1) {
+                if (tablero[i][j + 1] <= 0) {
+                    aux++;
+                }
+            }
+        }
+    }
+    if (aux == 4) {
+        indX++;
+        for (int i = 0; i < 20; i++) {
+            for (int j = 9; j >= 0; j--) {
+                if (tablero[i][j] == -1) {
+                    tablero[i][j] = 0;
+                    tablero[i][j + 1] = -1;
+                }
+            }
+        }
+    }
+}
+
 void Tablero::draw(RenderTarget&rt, RenderStates rs) const{
 	for (int i = 0; i < 20; i++) {
 		for (int j = 0; j < 10; j++) {
