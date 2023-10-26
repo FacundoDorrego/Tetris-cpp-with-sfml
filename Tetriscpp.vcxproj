@@ -137,10 +137,13 @@
     <ClCompile Include="piezas.cpp" />
     <ClCompile Include="tablero.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Jugador.hpp" />
     <ClInclude Include="Piezas.hpp" />
     <ClInclude Include="Tablero.hpp" />
+    <ClInclude Include="UI.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

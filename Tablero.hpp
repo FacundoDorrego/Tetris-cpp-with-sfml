@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cstring>
 #include "Piezas.hpp"
-#include <time.h>
+
 using namespace sf;
 
 class Tablero : public Drawable {
@@ -17,7 +17,9 @@ private:
 	RectangleShape tableroShapes[20][10];
 	sf::Clock reloj;
 	float segundosTranscurridos;
-	float intervaloActualizacion = 0.5f;
+	float intervaloActualizacion = 1.0f;
+
+	
 public:
 	//Constructor
 	Tablero();
@@ -26,12 +28,15 @@ public:
 	bool actualizarTablero();
 	//colocacion de pieza
 	bool colocarPieza();
-	//Renderizado
-	void actualizarLimiteTemp(int l);
+	//setter
 	void actualizarIntervalo(float i);
 	//movimientos
 	void izquierda();
 	void derecha();
 	void rotacion();
+	//limpiar lineas
+	int checkLinea();
+	//Renderizado
 	virtual void draw(RenderTarget&, RenderStates) const;
+	
 };

@@ -20,6 +20,7 @@ bool Tablero::colocarPieza() {
     indNuevaPieza = rand() % 7;
     vector<vector<bool>> pieza = piezas.ConsultPieza(indNuevaPieza);
     int sz = (int)pieza.size();
+    
     indY = 0;
     indX = 5 - sz / 2;
     for (int i = 0; i < sz; i++) {
@@ -61,13 +62,14 @@ bool Tablero::colocarPieza() {
         nuevaPiezaColor = Color(Color(138, 194, 247));
         break;
     }
+    
     return true;
 }
 
 bool Tablero::actualizarTablero() {
     bool limite = false;
+   
     int aux;
-    
     segundosTranscurridos += reloj.restart().asSeconds();
     if (segundosTranscurridos >= intervaloActualizacion) {
         aux = 0;
@@ -89,7 +91,8 @@ bool Tablero::actualizarTablero() {
                     }
                 }
             }
-        } else {
+        }
+        else {
             aux = 0;
             for (int i = 18; i >= 0; i--) {
                 for (int j = 0; j < 10; j++) {
@@ -112,12 +115,12 @@ bool Tablero::actualizarTablero() {
             }
         }
         segundosTranscurridos = 0.0f;
+        
+        
     }
 
     return limite;
 }
-
-
 
 void Tablero::actualizarTableroColor(){
 	for (int i = 0; i < 20; i++) {
@@ -174,7 +177,7 @@ void Tablero::izquierda() {
         }
     }
     if (aux == 4) {
-        indX++;
+        indX--;
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 10; j++) {
                 if (tablero[i][j] == -1) {
@@ -210,36 +213,108 @@ void Tablero::derecha() {
     }
 }
 
-void Tablero::rotacion(){
+void Tablero::rotacion() {
+    int piezaX = indX;
+    int piezaY = indY;
     piezas.rotarPieza(indNuevaPieza);
     vector<vector<bool>> pieza = piezas.ConsultPieza(indNuevaPieza);
     int sz = (int)pieza.size();
-    for(int i=0;i<sz;i++){
-        for(int j=0;j<sz;j++){
+    bool seRealizoRotacion = false;
+    int originalY = indY;
+
+    for (int i = 0; i < sz; i++) {
+        for (int j = 0; j < sz; j++) {
             if (pieza[i][j]) {
-                if (indY+i<0||indY+i>=20||indX+j>=10||tablero[indY+i][indX+j] > 0) {
+                int nuevaY = indY + i;
+                int nuevaX = indX + j;
+
+                if (nuevaY < 0 || nuevaY >= 20 || nuevaX >= 10 || nuevaX < 0 || tablero[nuevaY][nuevaX] > 0) {
                     piezas.desRotarPieza(indNuevaPieza);
                     return;
                 }
             }
         }
     }
-    for(int i=0;i<20;i++){
-        for(int j=0;j<10;j++){
+
+   
+    for (int i = 0; i < 20; i++) {
+        for (int j = 0; j < 10; j++) {
             if (tablero[i][j] == -1) {
                 tablero[i][j] = 0;
             }
         }
     }
 
-    for(int i=0;i<sz;i++){
-        for(int j=0;j<sz;j++){
+    
+    for (int i = 0; i < sz; i++) {
+        for (int j = 0; j < sz; j++) {
             if (pieza[i][j]) {
-                tablero[indY+i][indX+j] = -1;
+                seRealizoRotacion = true;
+                tablero[indY + i][indX + j] = -1;  
             }
         }
     }
+
+   
+    if (seRealizoRotacion) {
+        indY = originalY; 
+    }
+
+    
+    if (seRealizoRotacion) {
+        if (indY < 19) {
+            indY++;
+        }
+    }
 }
+
+
+
+int Tablero::checkLinea() {
+    int lineasBorradas = 0;
+
+    for (int i = 19; i >= 0; ) {
+        bool lineaCompleta = true;
+
+        for (int j = 0; j < 10; j++) {
+            if (tablero[i][j] == 0) {
+                lineaCompleta = false;
+                break;
+            }
+        }
+
+        if (lineaCompleta) {
+            for (int k = i; k > 0; k--) {
+                for (int j = 0; j < 10; j++) {
+                    tablero[k][j] = tablero[k - 1][j];
+                }
+            }
+
+            for (int j = 0; j < 10; j++) {
+                tablero[0][j] = 0;
+            }
+
+            lineasBorradas++;
+        }
+        else {
+            i--;
+        }
+    }
+
+    return lineasBorradas;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 void Tablero::draw(RenderTarget&rt, RenderStates rs) const{
 	for (int i = 0; i < 20; i++) {

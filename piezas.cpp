@@ -54,6 +54,7 @@ void Piezas::rotarPieza(int ind) {
 		for (int j = sz - 1; j >= 0; j--) {
 			piezas[ind][indI][indJ] = vAux[j][i];
 			indJ++;
+
 		}
 		indI++;
 		indJ = 0;
