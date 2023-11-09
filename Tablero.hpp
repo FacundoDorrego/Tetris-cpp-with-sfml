@@ -4,6 +4,8 @@
 #include <iostream>
 #include <cstring>
 #include "Piezas.hpp"
+#include "Jugador.hpp"
+#include "UI.hpp"
 
 using namespace sf;
 
@@ -18,6 +20,7 @@ private:
 	sf::Clock reloj;
 	float segundosTranscurridos;
 	float intervaloActualizacion = 1.0f;
+	
 
 	
 public:
@@ -26,16 +29,21 @@ public:
 	//Actualizacion visual
 	void actualizarTableroColor();
 	bool actualizarTablero();
+	void limpiarTablero();
 	//colocacion de pieza
 	bool colocarPieza();
 	//setter
 	void actualizarIntervalo(float i);
+	//getter
+	float getIntervaloActualizacion();
 	//movimientos
 	void izquierda();
 	void derecha();
 	void rotacion();
 	//limpiar lineas
 	int checkLinea();
+	//Jugar
+	void jugar();
 	//Renderizado
 	virtual void draw(RenderTarget&, RenderStates) const;
 	

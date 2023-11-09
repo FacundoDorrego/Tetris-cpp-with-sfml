@@ -13,7 +13,7 @@ public:
 	Piezas();
 	vector<vector<bool>> ConsultPieza(int ind);
 	void rotarPieza(int ind);
-	void desRotarPieza(int ind);
+	void desRrotarPieza(int ind);
 };
 
 #endif // PIEZAS_HPP

@@ -10,19 +10,18 @@ private:
 	Font fuente;
 	Text textoPuntaje;
 	Text textoTituloPuntaje;
-	Text textoMaxPuntaje;
-	Text textoTituloMaxPuntaje;
 	Text hechoPorTexto;
 	Text perdisteTexto;
-	Text textoNuevoPuntaje;
+	Text textoTituloLineas;
+	Text textoLineas;
 	bool perder = false;
-	bool nuevoPuntaje = false;
+	
 public:
 	UI();
 	void setPuntaje(int);
-	void setMaxPuntaje(int);
 	void Perder();
-	void NuevoPuntaje();
-	
+	void setLineas(int x);
+	void dibuCuad();
+	virtual void draw(RenderTarget&, RenderStates) const;
 
 };

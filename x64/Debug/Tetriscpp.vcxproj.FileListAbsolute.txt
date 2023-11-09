@@ -1,2 +1,3 @@
 C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\x64\Debug\Tetriscpp.exe
 C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\Tetris-cpp-with-sfml\x64\Debug\Tetriscpp.exe
+C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\Tetris-cpp\x64\Debug\Tetriscpp.exe

@@ -60,7 +60,10 @@ void Piezas::rotarPieza(int ind) {
 		indJ = 0;
 	}
 }
-void Piezas::desRotarPieza(int ind){
+
+
+
+void Piezas::desRrotarPieza(int ind){
 	vector<vector<bool>> vAux = piezas[ind];
 	int indI = 0, indJ = 0;
 	int sz = (int)piezas[ind].size();

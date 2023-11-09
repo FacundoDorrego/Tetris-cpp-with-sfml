@@ -1,7 +1,7 @@
-﻿  main.cpp
-  tablero.cpp
-C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\Tetris-cpp-with-sfml\tablero.cpp(9,46): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\Tetris-cpp-with-sfml\tablero.cpp(9,38): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\Tetris-cpp-with-sfml\tablero.cpp(19,15): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
-  Generando código...
-  Tetriscpp.vcxproj -> C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\Tetris-cpp-with-sfml\x64\Debug\Tetriscpp.exe
+﻿  tablero.cpp
+C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\Tetris-cpp\Jugador.hpp(66,16): warning C4267: 'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\Tetris-cpp\rlutil.h(577,19): warning C4267: 'inicializando': conversión de 'size_t' a 'unsigned int'; posible pérdida de datos
+C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\Tetris-cpp\tablero.cpp(10,46): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\Tetris-cpp\tablero.cpp(10,38): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\Tetris-cpp\tablero.cpp(20,15): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+  Tetriscpp.vcxproj -> C:\Users\facun\OneDrive\Escritorio\Facultad\Tetriscpp\Tetris-cpp\x64\Debug\Tetriscpp.exe

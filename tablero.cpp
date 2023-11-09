@@ -1,5 +1,6 @@
 #include "Tablero.hpp"
 #include "Piezas.hpp"
+#include "rlutil.h"
 Tablero::Tablero():segundosTranscurridos(0.0f) {
 	reloj.restart();
 	memset(tablero, 0, sizeof(tablero));
@@ -165,6 +166,10 @@ void Tablero::actualizarIntervalo(float i) {
     intervaloActualizacion = i;
 }
 
+float Tablero::getIntervaloActualizacion() {
+    return intervaloActualizacion;
+}
+
 void Tablero::izquierda() {
     int aux = 0;
     for (int i = 0; i < 20; i++) {
@@ -229,14 +234,12 @@ void Tablero::rotacion() {
                 int nuevaX = indX + j;
 
                 if (nuevaY < 0 || nuevaY >= 20 || nuevaX >= 10 || nuevaX < 0 || tablero[nuevaY][nuevaX] > 0) {
-                    piezas.desRotarPieza(indNuevaPieza);
+                    piezas.desRrotarPieza(indNuevaPieza);
                     return;
                 }
             }
         }
     }
-
-   
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 10; j++) {
             if (tablero[i][j] == -1) {
@@ -305,13 +308,136 @@ int Tablero::checkLinea() {
 }
 
 
+void Tablero::limpiarTablero() {
+    memset(tablero,0, sizeof(tablero));
+}
 
+void Tablero::jugar() {
+    Tablero tablero;
+    Jugador jugador;
+    UI ui;
+    ArchivoJugadores archijug("puntajes.dat");
+    char nombre[20];
+    int derecha = 0, izquierda = 0, arriba = 0, nuevoPuntaje = 0, lineas = 0, puntaje = 0, contLineas = 0;;
+    bool lineasBorradas = false, vivo = true, aumentoDificultad = false;
+    float velocidadOriginal = tablero.getIntervaloActualizacion();
+    ui.setLineas(lineas);
+    ui.setPuntaje(puntaje);
+    system("cls");
+    ui.dibuCuad();
+    gotoxy(55, 10);
+    cout << "TETRIS" << endl;
+    gotoxy(41, 13);
+    cout << "Nombre del jugador: " << endl;
+    gotoxy(41, 14);
+    cin >> nombre;
+    system("cls");
+    jugador.setNombre(nombre);
+    RenderWindow window(VideoMode(500, 400), "Tetris");
+    window.setFramerateLimit(60);
+    gotoxy(55, 10);
+    cout << "LANZANDO JUEGO..." << endl;
+    while (window.isOpen()) {
+        Event event;
+        int contLineas = 0;
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed) {
+                window.close();
+            }
+        }
+        if (vivo) {
+            if (Keyboard::isKeyPressed(Keyboard::Right) && !derecha) {
+                tablero.derecha();
+                derecha = 1;
+            }
+            else if (!Keyboard::isKeyPressed(Keyboard::Right)) {
+                derecha = 0;
+            }
+            else if (Keyboard::isKeyPressed(Keyboard::Right) && derecha) {
+                derecha++;
+                if (derecha == 6) {
+                    derecha = 0;
+                }
+            }
+            if (Keyboard::isKeyPressed(Keyboard::Left) && !izquierda) {
+                tablero.izquierda();
+                izquierda = 1;
+            }
+            else if (!Keyboard::isKeyPressed(Keyboard::Left)) {
+                izquierda = 0;
+            }
+            else if (Keyboard::isKeyPressed(Keyboard::Left) && izquierda) {
+                izquierda++;
+                if (izquierda == 6) {
+                    izquierda = 0;
+                }
+            }
+            if (Keyboard::isKeyPressed(Keyboard::Up) && !arriba) {
+                tablero.rotacion();
 
+                arriba = 1;
+            }
+            else if (!Keyboard::isKeyPressed(Keyboard::Up)) {
+                arriba = 0;
+            }
+            if (Keyboard::isKeyPressed(Keyboard::Down)) {
+                tablero.actualizarIntervalo(0.1f); 
+            }
+            else {
+                tablero.actualizarIntervalo(velocidadOriginal); 
+            }
+            if (tablero.actualizarTablero()) {
+                int cantLineasBorradas = tablero.checkLinea();
+                if (cantLineasBorradas > 0) {
+                    lineasBorradas = true;
+                    lineas += cantLineasBorradas;
+                    nuevoPuntaje += cantLineasBorradas * 5;
+                    jugador.setLineas(lineas);
+                    jugador.setPuntaje(nuevoPuntaje);
+                    ui.setPuntaje(nuevoPuntaje);
+                    ui.setLineas(lineas);
+                    contLineas = lineas;
+                }
+                
 
+                if (lineas % 10 == 0 && contLineas != 0 && velocidadOriginal > 0.08f) {
+                    aumentoDificultad = true;
+                    float nuevaVelocidad = velocidadOriginal -= 0.1f;
+                    tablero.actualizarIntervalo(nuevaVelocidad);
+                    contLineas = 0;
+                }
+                if (!tablero.colocarPieza()) {
+                    system("cls");
+                    ui.dibuCuad();
+                    vivo = false;
+                    ui.Perder();
+                    tablero.limpiarTablero();
+                    gotoxy(55, 10);
+                    cout << "TETRIS" << endl;
+                    gotoxy(50, 13);
+                    cout << "----Perdiste----" << endl;
+                    gotoxy(50, 14);
+                    cout << "Jugador: " << jugador.getNombre() << endl;
+                    gotoxy(50, 15);
+                    cout << "Lineas: " << jugador.getLineas() << endl;
+                    gotoxy(50, 16);
+                    cout << "Puntaje: " << jugador.getPuntaje() << endl;
+                    gotoxy(50, 17);
+                    cout << "----------------" << endl;
+                    archijug.grabarRegistro(jugador);
+                }
 
+            }
 
+            tablero.actualizarTableroColor();
+        }
+        window.clear(Color(30, 30, 30));
+        window.draw(tablero);
+        window.draw(ui);
+        window.display();
+    }
 
-
+}
 
 
 
